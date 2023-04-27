@@ -13,14 +13,8 @@
     padding: 0;
 }
 
-#footer{
+#create{
     position: fixed;
-    /* justify-content: flex-end; */
-    justify-items: flex-end;
-    align-items: flex-end;
-    align-content: flex-end;
-    bottom: 0;
-    border: 2px solid red;
-    width:100%;
-    z-index: 50;
+    bottom: 16px;
+    right: 16px;
 }

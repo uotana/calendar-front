@@ -14,14 +14,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SmallCalendar from './SmallCalendar';
 import './styles.css';
-import Labels from './Tags';
-import ScheduleView from './ScheduleView';
-import EventForm from './EventForm'
+import Tags from './Tags';
+import Footer from './Footer';
+
 const drawerWidth = 340;
 
 function Calendar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [allEvents, setAllEvents] = useState([]);
   const [checkedLabels, setCheckedLabels] = useState([]);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -42,11 +43,6 @@ function Calendar(props) {
     setAnchorEl(null);
   };
 
-  const [formOpen, setFormOpen] = useState(true);
-  const toggleForm = () =>{
-    setFormOpen(!formOpen);
-  }
-
   const drawer = (
     <Box>
       <Box sx={{display:'flex', justifyContent: 'center', alignItems:'Center'}}>
@@ -57,7 +53,7 @@ function Calendar(props) {
       </Box>
       <Divider />
       <Box>
-        <Labels checkedLabels={checkedLabels} setCheckedLabels={setCheckedLabels}/>
+        <Tags checkedLabels={checkedLabels} setCheckedLabels={setCheckedLabels}/>
       </Box> 
     </Box>
   );
@@ -133,17 +129,14 @@ function Calendar(props) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)`}}}>
         <Toolbar />
-        <ScheduleView/>
+        {/* <ScheduleView/> */}
       </Box>
     </Box>
-    
-    <div id='footer'>
-      <EventForm/>
-    </div>
+    <Footer component='footer' setAllEvents={setAllEvents}/>
   </div>
-
   );
 }
+
 
 Calendar.propTypes = {
   window: PropTypes.func,
