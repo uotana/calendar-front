@@ -13,6 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SmallCalendar from './SmallCalendar';
+import ScheduleView from './ScheduleView';
 import './styles.css';
 import Tags from './Tags';
 import Footer from './Footer';
@@ -75,9 +76,6 @@ function Calendar(props) {
               <MenuIcon />
             </IconButton>
             <div id='header'>
-              <div className='logo'>
-                  <Typography variant="h4" noWrap component="div">Agenda</Typography>
-              </div>
               <div className='toolbar-header'>
                   {auth && (
                   <div>
@@ -129,7 +127,7 @@ function Calendar(props) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)`}}}>
         <Toolbar />
-        {/* <ScheduleView/> */}
+        <ScheduleView/>
       </Box>
     </Box>
     <Footer component='footer' setAllEvents={setAllEvents}/>
