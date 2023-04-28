@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import {useEffect } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import EventCard from './EventCard'
 
-export default function ScheduleView() {
+export default function ScheduleView({allEvents, setAllEvents}) {
   console.log("---------- SCHEDULE ----------")
-  const [eventItens, setEventItens] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/events", {
@@ -19,12 +18,12 @@ export default function ScheduleView() {
       }
     })
     .then(data => {
-      setEventItens(data);
+      setAllEvents(data);
     })
     .catch(error => {
       console.error('Erro ao criar evento:', error);
     });
-  }, []);
+  }, [setAllEvents]);
 
   return (
         <List sx={{width: 'fit-content',
@@ -33,7 +32,7 @@ export default function ScheduleView() {
                   flexWrap:'wrap', 
                   justifyContent:'center',
                   alignContent: 'center'}}>
-          {eventItens.map((value)=>{
+          {allEvents.map((value)=>{
             return(
                 <ListItem sx={{
                   maxWidth:300}}

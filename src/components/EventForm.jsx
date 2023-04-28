@@ -11,29 +11,22 @@ import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 
 
-function createEvent(data){
-  console.log('-------- creating event -------')
+async function createEvent(data){
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: (JSON.stringify(data)),
   }
-  useEffect(() => {
-    ('-------- use effect -------')
-    fetch("http://localhost:3000/events", requestOptions)
-    .then(async response => {
-      response.json();
-      console.log('fetch sem erro');
-    })
-    .catch(error => {
-      this.setState({ errorMessage: error.toString() });
-      console.error('There was an error!', error);
-      }),[]}
-    )
+  const response = await fetch('http://localhost:3000/events', requestOptions);
+  if (response.ok) {
+    console.log('response ok');
+    return response.json();
+  } else {
+    throw new Error('Erro ao criar evento');
+  }
 }
-export default function EventForm({open, setOpen, setAllEvents}) {
 
-  console.log('--------- event form ----------')
+export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -44,6 +37,21 @@ export default function EventForm({open, setOpen, setAllEvents}) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCreateEvent = () => {
+    createEvent({ event_title: title, event_description: description })
+      .then((data) => {
+        console.log('Evento criado com sucesso:', data);
+        const newEvents = [...allEvents, data];
+        console.log(newEvents);
+        setAllEvents(newEvents);
+      })
+      .catch((error) => {
+        console.error(error);
+        alert('Erro ao criar evento');
+      });
+      setOpen(false);
   };
 
   return (
@@ -94,8 +102,7 @@ export default function EventForm({open, setOpen, setAllEvents}) {
               Cancelar
             </IconButton>
           <div>
-            <IconButton onClick={()=>{
-              createEvent({event_title: title, event_description: description})}}  
+            <IconButton onClick={handleCreateEvent}  
               color='primary'>
               Criar evento
             </IconButton>

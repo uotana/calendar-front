@@ -126,7 +126,7 @@ function Calendar(props) {
       </Box>
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)`}}}>
         <Toolbar />
-        <ScheduleView/>
+        <ScheduleView allEvents={allEvents} setAllEvents={setAllEvents}/>
       </Box>
     </Box>
     <Footer component='footer' allEvents={allEvents} setAllEvents={setAllEvents}/>

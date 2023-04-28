@@ -4,7 +4,7 @@ import { IconButton } from '@mui/material';
 import {useState} from 'react';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
-export default function Footer({setAllEvents}){
+export default function Footer({allEvents, setAllEvents}){
 
     const [open, setOpen] = useState(false);
 
@@ -20,7 +20,7 @@ export default function Footer({setAllEvents}){
                     <AddCircleRoundedIcon color="primary" size='large'/>
                 </IconButton>
             </div>
-            <EventForm open={open} setOpen={setOpen} setAllEvents={setAllEvents}/>    
+            <EventForm open={open} setOpen={setOpen} allEvents={allEvents} setAllEvents={setAllEvents}/>    
         </> 
     );
 }
