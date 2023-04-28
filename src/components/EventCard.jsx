@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -22,11 +22,6 @@ export default function EventCard(value) {
   console.log("---------- CARD ----------")
   const eventItem = value.value
   console.log(eventItem['event_description'])
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Card sx={{ alignItens:'center', width:380}}>

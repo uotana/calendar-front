@@ -10,16 +10,32 @@ import { IconButton } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 
+
+function createEvent(data){
+  console.log('-------- creating event -------')
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: (JSON.stringify(data)),
+  }
+  useEffect(() => {
+    ('-------- use effect -------')
+    fetch("http://localhost:3000/events", requestOptions)
+    .then(async response => {
+      response.json();
+      console.log('fetch sem erro');
+    })
+    .catch(error => {
+      this.setState({ errorMessage: error.toString() });
+      console.error('There was an error!', error);
+      }),[]}
+    )
+}
 export default function EventForm({open, setOpen, setAllEvents}) {
 
   console.log('--------- event form ----------')
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-  console.log('open: ' + open);
-  console.log('setAllEvents: ' + setAllEvents);
-  console.log('type of open: ' + typeof(open));
-  console.log('setAllEvents: ' + typeof(setAllEvents));
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -29,25 +45,6 @@ export default function EventForm({open, setOpen, setAllEvents}) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  function createEvent(){
-    console.log('-------- creating form -------')
-    const data = { title, description};
-    console.log(data);
-    console.log('type of data: ' + typeof(data))
-    useEffect(() => {
-      async () => {
-        const resp = await fetch("http://localhost:3000/events", {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: (data),
-        });
-        const events = await response.json();
-        setAllEvents(events);
-        handleClose();
-      }
-    })}
 
   return (
     <div>
@@ -67,12 +64,14 @@ export default function EventForm({open, setOpen, setAllEvents}) {
           </DialogContentText>
           <TextField
             autoFocus
+            required
             margin="dense"
             id="name"
             label="title"
             type="title"
             fullWidth
-            variant="standard"
+            variant="outlined"
+            size='Normal'
             value={title}
             onChange={handleTitleChange}
           />
@@ -83,7 +82,8 @@ export default function EventForm({open, setOpen, setAllEvents}) {
             label="description"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
+            multiline
             value={description}
             onChange={handleDescriptionChange}
           />
@@ -94,11 +94,15 @@ export default function EventForm({open, setOpen, setAllEvents}) {
               Cancelar
             </IconButton>
           <div>
-            <IconButton onClick={createEvent}  color='primary'>
+            <IconButton onClick={()=>{
+              createEvent({event_title: title, event_description: description})}}  
+              color='primary'>
               Criar evento
             </IconButton>
+
           </div>
         </DialogActions>
     </Dialog>
     </div>
-  )}
+  )
+}

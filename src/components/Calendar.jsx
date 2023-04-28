@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
@@ -124,7 +124,6 @@ function Calendar(props) {
           {drawer}
         </Drawer>
       </Box>
-
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)`}}}>
         <Toolbar />
         <ScheduleView/>
