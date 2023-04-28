@@ -129,7 +129,7 @@ function Calendar(props) {
         <ScheduleView/>
       </Box>
     </Box>
-    <Footer component='footer' setAllEvents={setAllEvents}/>
+    <Footer component='footer' allEvents={allEvents} setAllEvents={setAllEvents}/>
   </div>
   );
 }
