@@ -19,7 +19,6 @@ async function createEvent(data){
   }
   const response = await fetch('http://localhost:3000/events', requestOptions);
   if (response.ok) {
-    console.log('response ok');
     return response.json();
   } else {
     throw new Error('Erro ao criar evento');
@@ -32,6 +31,7 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [titleError, setTitleError] = useState(false);
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setDescription(event.target.value); 
 
@@ -40,18 +40,26 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
   };
 
   const handleCreateEvent = () => {
-    createEvent({ event_title: title, event_description: description })
-      .then((data) => {
-        console.log('Evento criado com sucesso:', data);
-        const newEvents = [...allEvents, data];
-        console.log(newEvents);
-        setAllEvents(newEvents);
-      })
-      .catch((error) => {
-        console.error(error);
-        alert('Erro ao criar evento');
-      });
-      setOpen(false);
+
+    if(title){
+      createEvent({ event_title: title, event_description: description })
+        .then((data) => {
+          console.log('Evento criado com sucesso:', data);
+          const newEvents = [...allEvents, data];
+          console.log(newEvents);
+          setAllEvents(newEvents);
+          setTitleError(false);
+          setTitle('');
+          setDescription('');
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('Erro ao criar evento');
+        });
+        setOpen(false);
+        return;
+    }
+    setTitleError(true);
   };
 
   return (
@@ -73,7 +81,8 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
           <TextField
             autoFocus
             required
-            margin="dense"
+            error={titleError}
+            margin="normal"
             id="name"
             label="title"
             type="title"
@@ -95,6 +104,14 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
             value={description}
             onChange={handleDescriptionChange}
           />
+          {/* <TextField
+          error
+          id="standard-error-helper-text"
+          label="Error"
+          defaultValue="Hello World"
+          helperText="Incorrect entry."
+          variant="standard"
+          /> */}
         </DialogContent>
 
         <DialogActions>
