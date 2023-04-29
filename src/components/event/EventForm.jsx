@@ -60,7 +60,7 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
+        aria-labelledby="responsive-dialog-event"
       >
         <DialogTitle id="responsive-dialog-title">
           {'Adicione um evento'}
@@ -101,13 +101,12 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
             <IconButton onClick={handleClose} color='gray' >
               Cancelar
             </IconButton>
-          <div>
+          
             <IconButton onClick={handleCreateEvent}  
               color='primary'>
               Criar evento
             </IconButton>
-
-          </div>
+          
         </DialogActions>
     </Dialog>
     </div>

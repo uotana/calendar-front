@@ -17,20 +17,27 @@ import ScheduleView from './ScheduleView';
 import './styles.css';
 import Tags from './Tags';
 import Footer from './Footer';
+import EventForm from './event/EventForm';
 
 const drawerWidth = 340;
 
 function Calendar(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const [allEvents, setAllEvents] = useState([]);
   const [checkedLabels, setCheckedLabels] = useState([]);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const [open, setOpen] = useState(false);
 
-  const [auth, setAuth] = useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClickOpen = () => {
+    console.log('clicked open');
+    setOpen(true);
+  };
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -129,7 +136,8 @@ function Calendar(props) {
         <ScheduleView allEvents={allEvents} setAllEvents={setAllEvents}/>
       </Box>
     </Box>
-    <Footer component='footer' allEvents={allEvents} setAllEvents={setAllEvents}/>
+    <EventForm open={open} setOpen={setOpen} allEvents={allEvents} setAllEvents={setAllEvents}/>
+    <Footer handleClickOpen={handleClickOpen}/>
   </div>
   );
 }

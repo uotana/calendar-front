@@ -1,7 +1,7 @@
 import {useEffect } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import EventCard from './EventCard'
+import EventCard from './event/EventCard'
 
 export default function ScheduleView({allEvents, setAllEvents}) {
   console.log("---------- SCHEDULE ----------")
@@ -17,9 +17,7 @@ export default function ScheduleView({allEvents, setAllEvents}) {
         console.error('Erro ao criar evento:', response.statusText);
       }
     })
-    .then(data => {
-      setAllEvents(data);
-    })
+    .then(data => {setAllEvents(data);})
     .catch(error => {
       console.error('Erro ao criar evento:', error);
     });
@@ -33,11 +31,17 @@ export default function ScheduleView({allEvents, setAllEvents}) {
                   justifyContent:'center',
                   alignContent: 'center'}}>
           {allEvents.map((value)=>{
+            console.log(value)
             return(
                 <ListItem sx={{
                   maxWidth:300}}
-                  key = {value['event_id']}>
-                  <EventCard value={value}/>
+                  key = {`event_${value['event_id']}`}>
+                  <EventCard 
+                    id={value['event_id']}
+                    title={value['event_title']}
+                    description={value['event_description']}
+                    allEvents={allEvents}
+                    setAllEvents={setAllEvents}/>
                 </ListItem>
             );  
           })} 
