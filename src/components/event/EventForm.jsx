@@ -104,14 +104,6 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
             value={description}
             onChange={handleDescriptionChange}
           />
-          {/* <TextField
-          error
-          id="standard-error-helper-text"
-          label="Error"
-          defaultValue="Hello World"
-          helperText="Incorrect entry."
-          variant="standard"
-          /> */}
         </DialogContent>
 
         <DialogActions>
