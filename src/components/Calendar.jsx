@@ -16,7 +16,7 @@ import SmallCalendar from './SmallCalendar';
 import ScheduleView from './ScheduleView';
 import './styles.css';
 import Tags from './Tags';
-import Footer from './Footer';
+import CreateButton from './CreateButton';
 import EventForm from './event/EventForm';
 
 const drawerWidth = 340;
@@ -137,7 +137,7 @@ function Calendar(props) {
       </Box>
     </Box>
     <EventForm open={open} setOpen={setOpen} allEvents={allEvents} setAllEvents={setAllEvents}/>
-    <Footer handleClickOpen={handleClickOpen}/>
+    <CreateButton handleClickOpen={handleClickOpen}/>
   </div>
   );
 }
