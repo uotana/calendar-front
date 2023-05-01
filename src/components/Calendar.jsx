@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import AccountMenu from './AccountMenu';
+import {Box} from '@mui/material';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SmallCalendar from './SmallCalendar';
@@ -18,13 +15,12 @@ import './styles.css';
 import Tags from './Tags';
 import CreateButton from './CreateButton';
 import EventForm from './event/EventForm';
-
+import Header from './Header';
 const drawerWidth = 340;
 
-function Calendar(props) {
+export default function Calendar(props) {
   const { window } = props;
-  const [auth, setAuth] = useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
+
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const [allEvents, setAllEvents] = useState([]);
@@ -37,18 +33,6 @@ function Calendar(props) {
   const handleClickOpen = () => {
     console.log('clicked open');
     setOpen(true);
-  };
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   const drawer = (
@@ -72,37 +56,7 @@ function Calendar(props) {
     <div sx={{position:'relative'}}>
       <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed"
-        sx={{width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },}}>
-        <Toolbar>
-            <IconButton color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>
-              <MenuIcon />
-            </IconButton>
-            <div id='header'>
-              <div className='toolbar-header'>
-                  {auth && (
-                  <div>
-                      <IconButton
-                      size="large"
-                      aria-label="account of current user"
-                      aria-controls="account-settings"
-                      aria-haspopup="true"
-                      onClick={handleMenu}
-                      color="inherit"
-                      >
-                      <AccountCircle/>
-                      </IconButton>
-                      <AccountMenu anchorEl={anchorEl} handleClose={handleClose}/>
-                  </div>
-                  )}
-              </div>
-            </div>
-        </Toolbar>
-      </AppBar>
+      <Header handleDrawerToggle={handleDrawerToggle}/>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -146,5 +100,3 @@ function Calendar(props) {
 Calendar.propTypes = {
   window: PropTypes.func,
 };
-
-export default Calendar;
