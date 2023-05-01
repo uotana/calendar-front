@@ -4,10 +4,9 @@ import AccountMenu from './AccountMenu';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
-import { Toolbar } from '@mui/material';
+import { Typography, Toolbar, Box } from '@mui/material';
 
 export default function Header(handleDrawerToggle){
-    const drawerWidth = 340;
     const [auth, setAuth] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -24,16 +23,17 @@ export default function Header(handleDrawerToggle){
       };
 
     return(
-        <AppBar position="fixed"
-        sx={{width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },}}>
+        <AppBar position="fixed">
         <Toolbar>
             <IconButton color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={handleDrawerToggle.handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>
-              <MenuIcon />
+            onClick={handleDrawerToggle.handleDrawerToggle} sx={{ mr: 2, }}>
+              <MenuIcon sx={{width: 35, height:35}}/>
             </IconButton>
+            <Box sx={{display:'flex', justifyContent: 'center', alignItems:'Center'}}>
+                <Typography sx={{padding: 2.5}} variant='h4'>Agenda</Typography>
+            </Box>
             <div id='header'>
               <div className='toolbar-header'>
                   {auth && (
@@ -46,7 +46,7 @@ export default function Header(handleDrawerToggle){
                       onClick={handleMenu}
                       color="inherit"
                       >
-                      <AccountCircle/>
+                      <AccountCircle sx={{width:35, height:35}}/>
                       </IconButton>
                       <AccountMenu anchorEl={anchorEl} handleClose={handleClose}/>
                   </div>

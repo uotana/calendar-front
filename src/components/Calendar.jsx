@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
-import {Box} from '@mui/material';
-
-import CssBaseline from '@mui/material/CssBaseline';
+import {Box, Typography} from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import SmallCalendar from './SmallCalendar';
 import ScheduleView from './ScheduleView';
 import './styles.css';
@@ -16,13 +12,12 @@ import Tags from './Tags';
 import CreateButton from './CreateButton';
 import EventForm from './event/EventForm';
 import Header from './Header';
+
 const drawerWidth = 340;
 
 export default function Calendar(props) {
   const { window } = props;
-
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const [allEvents, setAllEvents] = useState([]);
   const [checkedLabels, setCheckedLabels] = useState([]);
   const handleDrawerToggle = () => {
@@ -37,8 +32,9 @@ export default function Calendar(props) {
 
   const drawer = (
     <Box>
+      {/* <Toolbar/> */}
       <Box sx={{display:'flex', justifyContent: 'center', alignItems:'Center'}}>
-        <Typography sx={{padding: 2.5}} variant='h4'>Agenda</Typography>
+          <Typography sx={{padding: 2.5}} variant='h4'>Agenda</Typography>
       </Box>
       <Box>
         <SmallCalendar/>
@@ -53,46 +49,46 @@ export default function Calendar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div sx={{position:'relative'}}>
+    <>
       <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <Header handleDrawerToggle={handleDrawerToggle}/>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="events"
-      >
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{keepMounted: true,}}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}>
-          {drawer}
-        </Drawer>
+        <Header handleDrawerToggle={handleDrawerToggle} />
+        {/* <div sx={{ position: 'absolute'}}> */}
+          <Box
+            component="nav"
+            sx={{width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          >
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{ keepMounted: true, }}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}>
+              {drawer}
+            </Drawer>
 
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },}}
-          open>
-          
-          {drawer}
-        </Drawer>
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+              open>
+
+              {drawer}
+            </Drawer>
+          </Box>
+          <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+            <Toolbar />
+            <ScheduleView allEvents={allEvents} setAllEvents={setAllEvents} />
+          </Box>
+        {/* </div> */}
       </Box>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)`}}}>
-        <Toolbar />
-        <ScheduleView allEvents={allEvents} setAllEvents={setAllEvents}/>
-      </Box>
-    </Box>
-    <EventForm open={open} setOpen={setOpen} allEvents={allEvents} setAllEvents={setAllEvents}/>
-    <CreateButton handleClickOpen={handleClickOpen}/>
-  </div>
+    <EventForm open={open} setOpen={setOpen} allEvents={allEvents} setAllEvents={setAllEvents} /><CreateButton handleClickOpen={handleClickOpen} />
+    </>
   );
 }
 
