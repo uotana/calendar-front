@@ -44,7 +44,6 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
           setTitleError(false);
           setTitle('');
           setDescription('');
-          setAlert(true);
         })
         .catch((error) => {
           console.error(error);

@@ -8,7 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import SmallCalendar from './SmallCalendar';
 import ScheduleView from './ScheduleView';
 import './styles.css';
-import Labels from './Label';
+import Labels from './Labels';
 import CreateButton from './CreateButton';
 import EventForm from './event/EventForm';
 import Header from './Header';
@@ -28,7 +28,6 @@ export default function Calendar(props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-    console.log('clicked open');
     setOpen(true);
   };
 
@@ -83,7 +82,7 @@ export default function Calendar(props) {
           </Box>
           <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
             <Toolbar />
-            <ScheduleView allEvents={allEvents} setAllEvents={setAllEvents} />
+            <ScheduleView allEvents={allEvents} setAllEvents={setAllEvents} alert={alert}/>
           </Box>
       </Box>
     <EventForm 
