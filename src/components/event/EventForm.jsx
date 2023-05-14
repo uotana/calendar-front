@@ -25,6 +25,12 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
     setOpen(false);
   };
 
+  const resetInput = ()=>{          
+    setTitleError(false);
+    setTitle('');
+    setDescription(''); 
+  }
+
   useEffect(() => {
     if(alert) {
       setTimeout(() => {
@@ -34,16 +40,13 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
   }, [alert])
 
   const handleCreateEvent = () => {
-
     if(title){
       createEvent({ event_title: title, event_description: description })
         .then((data) => {
           console.log('Evento criado com sucesso:', data);
           const newEvents = [...allEvents, data];
           setAllEvents(newEvents);
-          setTitleError(false);
-          setTitle('');
-          setDescription('');
+          resetInput();
         })
         .catch((error) => {
           console.error(error);
