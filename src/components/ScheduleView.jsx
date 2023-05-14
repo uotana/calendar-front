@@ -1,28 +1,29 @@
-import {useEffect } from 'react';
+import {useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import EventCard from './event/EventCard'
+import { getAllEvents } from '../services/event';
 
-export default function ScheduleView({allEvents, setAllEvents}) {
-  console.log("---------- SCHEDULE ----------")
 
-  useEffect(() => {
-    fetch("http://localhost:3000/events", {
-      method: 'GET',
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        console.error('Erro ao criar evento:', response.statusText);
-      }
-    })
-    .then(data => {setAllEvents(data);})
+export default function ScheduleView({allEvents, setAllEvents, alert}) {
+  useEffect(()=>{
+    let ignore = false;
+    if(allEvents.length && !alert) {
+      return;
+    }
+    getAllEvents()
+    .then(data => {
+      if(ignore){
+        setAllEvents(data);
+      }})
     .catch(error => {
-      console.error('Erro ao criar evento:', error);
+      console.error('Erro:', error);
     });
-  }, [setAllEvents]);
-
+    return ()=>{
+      ignore = true;
+    }
+  },[allEvents, alert]);
+  
   return (
         <List sx={{width: 'fit-content',
                   display:'flex', 
@@ -30,8 +31,8 @@ export default function ScheduleView({allEvents, setAllEvents}) {
                   flexWrap:'wrap', 
                   justifyContent:'center',
                   alignContent: 'center'}}>
+          {alert && <h2> Submit Successful</h2>}
           {allEvents.map((value)=>{
-            console.log(value)
             return(
                 <ListItem sx={{
                   maxWidth:300}}

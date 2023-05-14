@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -8,13 +8,11 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 
 export default function Labels({checkedLabels, setCheckedLabels}) {
-  console.log("---------- LABEL ----------")
   const [allTags, setAllTags] = useState([]);
 
   const handleToggle = (value) => () => {
     const currentIndex = checkedLabels.indexOf(value);
     const newCheckedLabels = [...checkedLabels];
-    console.log('newCheckedLabels: ' + newCheckedLabels);
     if (currentIndex === -1) {
       newCheckedLabels.push(value);
     } else {
@@ -31,14 +29,14 @@ export default function Labels({checkedLabels, setCheckedLabels}) {
       if (response.ok) {
         return response.json();
       } else {
-        console.error('Erro ao criar evento:', response.statusText);
+        console.error('Erro:', response.statusText);
       }
     })
     .then(data => {
       setAllTags(data);
     })
     .catch(error => {
-      console.error('Erro ao criar evento:', error);
+      console.error('Erro:', error);
     });
   }, []);
 

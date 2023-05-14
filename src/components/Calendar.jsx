@@ -8,7 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import SmallCalendar from './SmallCalendar';
 import ScheduleView from './ScheduleView';
 import './styles.css';
-import Tags from './Tags';
+import Labels from './Label';
 import CreateButton from './CreateButton';
 import EventForm from './event/EventForm';
 import Header from './Header';
@@ -20,6 +20,8 @@ export default function Calendar(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [allEvents, setAllEvents] = useState([]);
   const [checkedLabels, setCheckedLabels] = useState([]);
+  const [alert, setAlert] = useState(false);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -32,7 +34,6 @@ export default function Calendar(props) {
 
   const drawer = (
     <Box>
-      {/* <Toolbar/> */}
       <Box sx={{display:'flex', justifyContent: 'center', alignItems:'Center'}}>
           <Typography sx={{padding: 2.5}} variant='h4'>Agenda</Typography>
       </Box>
@@ -41,7 +42,7 @@ export default function Calendar(props) {
       </Box>
       <Divider />
       <Box>
-        <Tags checkedLabels={checkedLabels} setCheckedLabels={setCheckedLabels}/>
+        <Labels checkedLabels={checkedLabels} setCheckedLabels={setCheckedLabels}/>
       </Box> 
     </Box>
   );
@@ -52,7 +53,6 @@ export default function Calendar(props) {
     <>
       <Box sx={{ display: 'flex' }}>
         <Header handleDrawerToggle={handleDrawerToggle} />
-        {/* <div sx={{ position: 'absolute'}}> */}
           <Box
             component="nav"
             sx={{width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -85,9 +85,15 @@ export default function Calendar(props) {
             <Toolbar />
             <ScheduleView allEvents={allEvents} setAllEvents={setAllEvents} />
           </Box>
-        {/* </div> */}
       </Box>
-    <EventForm open={open} setOpen={setOpen} allEvents={allEvents} setAllEvents={setAllEvents} /><CreateButton handleClickOpen={handleClickOpen} />
+    <EventForm 
+      open={open} 
+      setOpen={setOpen} 
+      allEvents={allEvents} 
+      setAllEvents={setAllEvents} 
+      setAlert={setAlert}/>
+    <CreateButton handleClickOpen={handleClickOpen} />
+    
     </>
   );
 }

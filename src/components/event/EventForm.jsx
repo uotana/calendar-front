@@ -9,23 +9,9 @@ import { useTheme } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
+import { createEvent } from '../../services/event';
 
-
-async function createEvent(data){
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: (JSON.stringify(data)),
-  }
-  const response = await fetch('http://localhost:3000/events', requestOptions);
-  if (response.ok) {
-    return response.json();
-  } else {
-    throw new Error('Erro ao criar evento');
-  }
-}
-
-export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
+export default function EventForm({open, setOpen, allEvents, setAllEvents, setAlert}) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -39,6 +25,14 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if(alert) {
+      setTimeout(() => {
+        setAlert(false);
+      }, 1000)
+    }
+  }, [alert])
+
   const handleCreateEvent = () => {
 
     if(title){
@@ -46,11 +40,11 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents}) {
         .then((data) => {
           console.log('Evento criado com sucesso:', data);
           const newEvents = [...allEvents, data];
-          console.log(newEvents);
           setAllEvents(newEvents);
           setTitleError(false);
           setTitle('');
           setDescription('');
+          setAlert(true);
         })
         .catch((error) => {
           console.error(error);

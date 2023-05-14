@@ -9,9 +9,6 @@ import Box from '@mui/material/Box';
 import DeleteDialog from './DeleteDialog';
 
 export default function EventCard({id, title, description, allEvents, setAllEvents}) {
-  console.log("---------- CARD ----------")
-
-  console.log(title, description)
   const [deleteCard, setDeleteCard] = useState(false);
 
   const handleDialogOpen= () => {
