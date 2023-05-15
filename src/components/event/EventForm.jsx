@@ -43,9 +43,10 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
     if(title){
       createEvent({ event_title: title, event_description: description })
         .then((data) => {
-          console.log('Evento criado com sucesso:', data);
-          const newEvents = [...allEvents, data];
+          console.log('Evento criado com sucesso:', ...data);
+          const newEvents = [...allEvents,...data];
           setAllEvents(newEvents);
+          setAlert(true);
           resetInput();
         })
         .catch((error) => {
