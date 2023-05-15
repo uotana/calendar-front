@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 import { createEvent } from '../../services/event';
 
-export default function EventForm({open, setOpen, allEvents, setAllEvents, setAlert}) {
+export default function EventForm({open, setOpen, allEvents, setAllEvents, setAlert, alert}) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -35,7 +35,7 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
     if(alert) {
       setTimeout(() => {
         setAlert(false);
-      }, 1000)
+      }, 10000)
     }
   }, [alert])
 
@@ -43,7 +43,6 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
     if(title){
       createEvent({ event_title: title, event_description: description })
         .then((data) => {
-          console.log('Evento criado com sucesso:', ...data);
           const newEvents = [...allEvents,...data];
           setAllEvents(newEvents);
           setAlert(true);
@@ -60,7 +59,6 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
   };
 
   return (
-    <div>
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -107,14 +105,11 @@ export default function EventForm({open, setOpen, allEvents, setAllEvents, setAl
             <IconButton onClick={handleClose} color='gray' >
               Cancelar
             </IconButton>
-          
             <IconButton onClick={handleCreateEvent}  
               color='primary'>
               Criar evento
             </IconButton>
-          
         </DialogActions>
     </Dialog>
-    </div>
   )
 }

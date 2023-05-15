@@ -22,3 +22,16 @@ export async function createEvent(data){
     throw new Error('Erro ao criar evento');
   }
 }
+
+export function deleteEvent(event_id){
+  const requestOptions = {
+      method: 'DELETE',
+    }  
+  fetch(`http://localhost:3000/events/${event_id}`, requestOptions)
+  .then((response)=>{
+      if(response.ok) return response.json();
+  })
+  .catch(error => {
+      console.error('Erro ao criar evento:', error);
+    });   
+}

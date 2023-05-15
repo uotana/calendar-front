@@ -39,7 +39,8 @@ export default function Calendar(props) {
         setOpen={setOpen} 
         allEvents={allEvents} 
         setAllEvents={setAllEvents} 
-        setAlert={setAlert}/>
+        setAlert={setAlert}
+        alert={alert}/>
       <CreateButton handleClickOpen={handleClickOpen} />
     </>
   );
