@@ -18,27 +18,27 @@ export default function EventCard({id, title, description, allEvents, setAllEven
   return (
   <>
       <Card sx={{ alignItens:'center', width:380}}>
-      <Box sx={{
-        display: 'flex',
-        flexDirection:'row', 
-        justifyContent:'spaced-between',
-        alignItems:'center', 
-        padding:1,
-        }}>
-          <Box>
-          <Typography variant='h5'>{title}</Typography>
-          </Box>
-        
-        <IconButton onClick={handleDialogOpen}>
-          <DeleteRoundedIcon />
-        </IconButton>  
-      </Box>
-      <Divider/>
-      <CardContent sx={{display:'flex', flexDirection:'column', minWidth:'3rem'}}>
-          <Typography paragraph sx={{display:'flex', flexWrap:'wrap'}}>
-            {description}
-          </Typography>
-      </CardContent>
+        <Box sx={{
+          display: 'flex',
+          flexDirection:'row', 
+          justifyContent:'spaced-between',
+          alignItems:'center', 
+          padding:1,
+          }}>
+            <Box>
+            <Typography variant='h5'>{title}</Typography>
+            </Box>
+          
+          <IconButton onClick={handleDialogOpen}>
+            <DeleteRoundedIcon />
+          </IconButton>  
+        </Box>
+        <Divider/>
+        <CardContent sx={{display:'flex', flexDirection:'column', minWidth:'3rem'}}>
+            <Typography paragraph sx={{display:'flex', flexWrap:'wrap'}}>
+              {description}
+            </Typography>
+        </CardContent>
     </Card>
     <DeleteDialog
       id={id} 
