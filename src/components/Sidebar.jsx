@@ -8,13 +8,16 @@ import Divider from '@mui/material/Divider';
 import Labels from './Labels';
 
 export function Sidebar({handleDrawerToggle, mobileOpen, props}){
-    const drawerWidth = 340;
+  const drawerXsScreen = '90%';
+  const drawerSmScreen = '50%';
+  const drawerMdScreen = '40%';
+  const drawerLgScreen = '25%';
     const { window } = props;
     const [checkedLabels, setCheckedLabels] = useState([]);
 
 
   const drawer = (
-    <Box>
+    <>
       <Box sx={{display:'flex', justifyContent: 'center', alignItems:'Center'}}>
           <Typography sx={{padding: 2.5}} variant='h4'>Agenda</Typography>
       </Box>
@@ -25,18 +28,15 @@ export function Sidebar({handleDrawerToggle, mobileOpen, props}){
       <Box>
         <Labels checkedLabels={checkedLabels} setCheckedLabels={setCheckedLabels}/>
       </Box> 
-    </Box>
+    </>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
 
     return(
-        <>
-        <Box
-            component="nav"
-            sx={{width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-          >
+      <>
+
             <Drawer
               container={container}
               variant="temporary"
@@ -44,23 +44,26 @@ export function Sidebar({handleDrawerToggle, mobileOpen, props}){
               onClose={handleDrawerToggle}
               ModalProps={{ keepMounted: true, }}
               sx={{
-                display: { xs: 'block', sm: 'none' },
-                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                display: { xs: 'block', lg: 'block'},
+                '& .MuiDrawer-paper': { 
+                  boxSizing: 'border-box', 
+                  width: { xs: drawerXsScreen, sm: drawerSmScreen, md: drawerMdScreen, lg: drawerLgScreen  } },
               }}>
               {drawer}
             </Drawer>
 
-            <Drawer
+            {/* <Drawer
               variant="permanent"
               sx={{
-                display: { xs: 'none', sm: 'block' },
-                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                display: { xs: 'none', lg: 'block' },
+                '& .MuiDrawer-paper': { 
+                  boxSizing: 'border-box', width: { xs: drawerSmallScreen, md: drawerMediumScreen, lg: drawerLargeScreen } },
               }}
               open>
 
               {drawer}
-            </Drawer>
-          </Box>
+            </Drawer> */}
+        
       </>
     );
 }

@@ -1,6 +1,5 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import React from 'react';
-import IconButton from '@mui/material/Icon';
 import { deleteEvent } from '../../services/event';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -18,7 +17,7 @@ const handleDeleteEvent= (id, deleteCard,setDeleteCard, allEvents, setAllEvents)
     }
 };
 
-export default function DeleteDialog({id, deleteCard, setDeleteCard, handleDialogOpen, allEvents, setAllEvents}){
+export default function ConfirmDelete({id, deleteCard, setDeleteCard, handleDialogOpen, allEvents, setAllEvents}){
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     return(
@@ -33,12 +32,16 @@ export default function DeleteDialog({id, deleteCard, setDeleteCard, handleDialo
                 Após deletar o evento, ele não poderá ser recuperado. Tem certeza que deseja deletar?
             </DialogContent>
             <DialogActions>
-                <IconButton onClick={handleDialogOpen} color='gray' >
-                    Cancelar
-                </IconButton>
-                <IconButton onClick={()=>{handleDeleteEvent(id, deleteCard, setDeleteCard, allEvents,setAllEvents)}}  color='primary'>
-                    Apagar
-                </IconButton>
+                <Button>
+                    <Typography onClick={handleDialogOpen} color='gray'>
+                        Cancelar
+                    </Typography>
+                </Button>
+                <Button onClick={()=>{handleDeleteEvent(id, deleteCard, setDeleteCard, allEvents,setAllEvents)}}  color='primary'>
+                    <Typography>
+                        Apagar
+                    </Typography>
+                </Button>
             </DialogActions>
         </Dialog>
     );

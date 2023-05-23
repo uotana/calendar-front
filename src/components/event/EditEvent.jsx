@@ -8,57 +8,48 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { useState, useEffect } from 'react';
-import { createEvent } from '../../services/event';
+import { useState } from 'react';
+import { editEvent } from '../../services/event';
 
-export default function EventForm({ 
+export default function EditEvent({
+  value,
   open, 
   setOpen, 
   allEvents, 
   setAllEvents, 
-  alert, setAlert }) {
-    
+  alert, 
+  setAlert }) {
+  
+    console.log('event edit value: ', value);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [newTitle, setNewTitle] = useState(value['event_title']);
+  const [newDescription, setNewDescription] = useState(value['event_description']);
   const [titleError, setTitleError] = useState(false);
-  const handleTitleChange = (event) => setTitle(event.target.value);
-  const handleDescriptionChange = (event) => setDescription(event.target.value); 
+  const handleTitleChange = (event) => setNewTitle(event.target.value);
+  const handleDescriptionChange = (event) => setNewDescription(event.target.value); 
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const resetInput = ()=>{          
-    setTitleError(false);
-    setTitle('');
-    setDescription(''); 
-  }
-
-  useEffect(() => {
-    if(alert) {
-      setTimeout(() => {
-        setAlert(false);
-      }, 10000)
-    }
-  }, [alert])
-
-  const handleCreateEvent = () => {
-    if(title){
-      createEvent({ event_title: title, event_description: description })
-        .then((data) => {
-          setAllEvents([...allEvents,...data]);
+  const handleEditEvent = () => {
+    if(newTitle){
+      editEvent(value['event_id'], newTitle, newDescription)
+      .then((data) => {
+        if(data){
+          const updatedEventIndex = allEvents.findIndex(event => event.event_id === data[0].event_id);
+        if (updatedEventIndex !== -1) {
+          const updatedEvents = [...allEvents];
+          updatedEvents[updatedEventIndex] = data[0]; 
+          setAllEvents(updatedEvents);
           setAlert(true);
-          resetInput();
-        })
-        .catch((error) => {
-          console.error(error);
-          alert('Erro ao criar evento');
-        });
-        setOpen(false);
-        return;
+          setOpen(false);
+        }
+      }})
+      .catch((error)=> {
+        console.error('Error:', error);
+      })
+    
     }
     setTitleError(true);
   };
@@ -71,12 +62,12 @@ export default function EventForm({
         aria-labelledby="responsive-dialog-event"
       >
         <DialogTitle id="responsive-dialog-title">
-          {'Adicione um evento'}
+          {'Editar evento'}
         </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            Insira abaixo os dados para criar o evento.
+            Altere os dados do evento.
           </DialogContentText>
           <TextField
             autoFocus
@@ -84,24 +75,24 @@ export default function EventForm({
             error={titleError}
             margin="normal"
             id="name"
-            label="title"
+            label="Título"
             type="title"
             fullWidth
             variant="outlined"
             size='Normal'
-            value={title}
+            value={newTitle}
             onChange={handleTitleChange}
           />
           <TextField
             autoFocus
             margin="dense"
             id="description"
-            label="description"
+            label="Descrição"
             type="text"
             fullWidth
             variant="outlined"
             multiline
-            value={description}
+            value={newDescription}
             onChange={handleDescriptionChange}
           />
         </DialogContent>
@@ -110,9 +101,9 @@ export default function EventForm({
             <IconButton onClick={handleClose} color='gray' >
               Cancelar
             </IconButton>
-            <IconButton onClick={handleCreateEvent}  
+            <IconButton onClick={handleEditEvent}  
               color='primary'>
-              Criar evento
+              Editar evento
             </IconButton>
         </DialogActions>
     </Dialog>
